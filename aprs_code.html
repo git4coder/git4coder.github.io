@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APRS 码</title>
+    <style>
+      body {
+        background-color: #fcfcfc;
+        padding: 20px;
+      }
+      form {
+        position: relative;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        padding: 0;
+        margin: 0 auto;
+        width: 400px;
+        max-width: 100%;
+        box-sizing: border-box;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      form input {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        font-size: 16px;
+        height: 40px;
+        line-height: 40px;
+        outline: none;
+        padding: 0 10px;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      }
+      form button {
+        font-size: 16px;
+        display: block;
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        background-color: #CCC;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      #result::before {
+        vertical-align: super;
+        content: '结果：';
+        font-size: 12px;
+      }
+      #result {
+        font-size: 20px;
+        margin: 20px;
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      }
+    </style>
+  </head>
+  <body>
+    <form onsubmit="return false;">
+      <input type="text" id="callsign" maxlength="10" placeholder="input call sign" />
+      <button onclick="calc()">计算</button>
+    </form>
+    <div id="result">N/A</div>
+    <script>
+      function dodash(callsign = "") {
+        var sign = callsign.match(/[a-z0-9]+/)[0].toUpperCase();
+        var hash = 0x73e2;
+        var i = 0;
+        while (i < sign.length) {
+          var f = sign[i].charCodeAt();
+          hash ^= f << 8;
+          if (sign[i + 1]) {
+            var s = sign[i + 1].charCodeAt();
+            hash ^= s;
+          }
+          i += 2;
+        }
+        return Math.abs(hash);
+      }
+      function calc() {
+        var sign = document.getElementById('callsign').value;
+        if (sign.length > 1) {
+          var result = document.getElementById('result');
+          result.innerHTML = dodash(sign);
+        }
+        return false;
+      }
+    </script>
+  </body>
+</html>
