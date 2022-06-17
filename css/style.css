@@ -188,3 +188,17 @@ body {
   text-decoration: none;
   border-bottom: dotted 1px #4e4e4e;
 }
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align: center;
+}
+.footer a {
+  font-size: 12px;
+  color: #999;
+}
+.footer a:hover {
+  border-bottom-color: #999;
+}
